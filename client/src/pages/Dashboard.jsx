@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Copy, Plus, CheckCircle, Clock, XCircle, Users } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 export default function Dashboard() {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,7 @@ export default function Dashboard() {
 
   const fetchGuests = async () => {
     try {
-      const res = await fetch('/api/guests');
+      const res = await fetch(`${API_URL}/api/guests`);
       const data = await res.json();
       setGuests(data);
     } catch (error) {
@@ -29,7 +31,7 @@ export default function Dashboard() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/guests', {
+      const res = await fetch(`${API_URL}/api/guests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGuest),

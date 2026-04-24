@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Check, X, Heart, Loader2 } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 export default function Rsvp() {
   const { token } = useParams();
   const [guest, setGuest] = useState(null);
@@ -19,7 +21,7 @@ export default function Rsvp() {
 
   const fetchGuest = async () => {
     try {
-      const res = await fetch(`/api/guests/rsvp/${token}`);
+      const res = await fetch(`${API_URL}/api/guests/rsvp/${token}`);
       if (!res.ok) {
         throw new Error('Convite inválido ou não encontrado.');
       }
@@ -42,7 +44,7 @@ export default function Rsvp() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/guests/rsvp/${token}`, {
+      const res = await fetch(`${API_URL}/api/guests/rsvp/${token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, message }),
